@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { FaRegBell } from "react-icons/fa6";
 import { MdOutlineFilterAlt } from "react-icons/md";
 
 const App = () => {
 
-  const [search, setSearch] = useState('');
-  const [error, setError] = useState(false);
+  const [search, setSearch] = React.useState('');
+  const [error, setError] = React.useState(false);
 
   function handleSearchInput(e) {
     // console.log(e.target.value)
@@ -15,7 +15,7 @@ const App = () => {
 
   function handleSearchButtonClick() {
     // console.log(search)
-    if (search == '') {
+    if (search === '') {
       setError(true)
       console.log('True')
     }
@@ -33,7 +33,7 @@ const App = () => {
 
         <div className="card m-2" style={{ width: '18rem' }}>
           <ul className="list-group list-group-flush">
-            <li className="list-group-item" data-testid='Home' onClick={()=> console.log('Home')}>Home</li>
+            <li className="list-group-item" data-testid='Home' onClick={() => console.log('Home')}>Home</li>
             <li className="list-group-item">Learning</li>
             <li className="list-group-item">Community</li>
           </ul>
@@ -60,14 +60,21 @@ const App = () => {
 
 
         <div className='m-3 Search'>
-          
+
           <input type='text' placeholder='Seach Company, title' value={search} onChange={handleSearchInput} />
 
           <button data-testid="SearchButton" onClick={handleSearchButtonClick}>Search</button>
 
-          {error && search === '' ? <p className='text-danger' style={{ visibility: error ? "visible" : "hidden" }} data-testid='error'>Enter keyword to search</p> : <p data-testid='no-error'>Good</p>}
-          {/* <p className='text-danger' data-testid='error' style={{ visibility: error ? "visible" : "hidden" }}>Enter keyword to search</p> */}
+          {/* {error ? <p className='text-danger' style={{ visibility: error ? "visible" : "hidden" }} data-testid='error'>Enter keyword to search</p> : <p data-testid='no-error'>Good</p>} */}
+          <p className='text-danger' data-testid='error' style={{ visibility: error ? "visible" : "hidden" }}>Enter keyword to search</p>
 
+        </div>
+
+        <div className="card Main-Card-Buttons m-3" style={{ width: "18rem" }}>
+          <div className="card-body">
+            <h5 className="card-title" data-testid='DataQualityManager' onClick={() => console.log('Search found the word')}>Data Quality Manager</h5>
+            <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          </div>
         </div>
 
 
@@ -193,27 +200,27 @@ const App = () => {
 
         {/* <!-- Button trigger modal --> */}
         <button type="button" className="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Launch demo modal
-      </button> 
+          Launch demo modal
+        </button>
 
         {/* <!-- Modal --> */}
-         <div className="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div className="modal-body">
-              
-            </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" className="btn btn-primary">Save changes</button>
+        <div className="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div className="modal-body">
+
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" className="btn btn-primary">Save changes</button>
+              </div>
             </div>
           </div>
         </div>
-      </div> 
 
 
       </section>

@@ -3,6 +3,7 @@ import '@testing-library/jest-dom/extend-expect';
 import App from './App';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
+import React from 'react';
 // import { describe } from 'node:test';
 
 // test('renders learn react link', () => {
@@ -161,199 +162,194 @@ describe('SearchBar, Button visible and search-results test', () => {
 
   test('SearchBar Empty Error Test', () => {
     render(<App />)
-    const handleSearchButtonMock = jest.fn();
     const Search = screen.getByPlaceholderText('Seach Company, title')
     const SearchButton = screen.getByTestId('SearchButton')
-
-    // const Bell = screen.getByTestId('Bell')
-    const testValue = 'test'
-    const error = screen.getByTestId('error')
-
-    fireEvent.change(Search, { target: { value: testValue } })
-
-    fireEvent.click(SearchButton)
-
-    SearchButton.onclick = handleSearchButtonMock
-
-    expect(error).toBeVisible();
-  })
-
-  test('Error Message should not be visible', () => {
-    const handleSearchButtonMock = jest.fn();
-
-    render(<App error={true} setError={handleSearchButtonMock} />)
 
     const testValue = ''
     const error = screen.getByTestId('error')
+    // const setState = jest.fn();
+    // jest
+    //   .spyOn(React, 'useState')
+    //   .mockImplementationOnce(initState => ['true', setState]);
+
+    fireEvent.change(Search, { target: { value: testValue } })
+    fireEvent.click(SearchButton);
+    // act(() => fireEvent.click(SearchButton));
+
+    expect(Search.value).toBe('');
+    expect(error).toBeVisible();
+  })
+
+  test('SearchBar Results Match Test', () => {
+    render(<App/>)
     const SearchButton = screen.getByTestId('SearchButton')
     const Search = screen.getByPlaceholderText('Seach Company, title')
+    const DataQualityManager = screen.getByTestId('DataQualityManager')
+    const testValue = 'Data Quality Manager'
 
+    fireEvent.change(Search,{target: {value: testValue}})
+    fireEvent.click(screen.getByTestId('On-site'))
+    fireEvent.click(SearchButton);
+    expect(testValue).toHaveAttribute('data-testid','DataQualityManager');
 
-    // SearchButton.onclick=handleSearchButtonMock;
-    // fireEvent.change(Search,{target : {value : testValue}})
-    // fireEvent.click(SearchButton)
-    act(async () => {
-      Search('Search', { target: { value: testValue } });
-      button.click();
+  })
 
-      expect(error).not.toBeVisible();
-    })
+  test('Error Message should not be visible', () => {
+    
+    render(<App/>)
+    const SearchButton = screen.getByTestId('SearchButton')
+    const Search = screen.getByPlaceholderText('Seach Company, title')
+    const testValue = 'test'
+    const error = screen.getByTestId('error')
 
-    test.skip('SearchBar Search test', () => {
-      render(<App />)
+    fireEvent.change(Search,{target: {value: testValue}})
 
-      const Search = screen.getByPlaceholderText('Seach Company, title')
-      // const SearchButton = screen.getByTestId('SearchButton')
-      const SearchWord = Search.value;
-      expect(SearchWord).toBeInTheDocument();
-      // expect(SearchButton).toBeInTheDocument();
+    fireEvent.click(SearchButton);
 
-    })
-
-
+    expect(error).not.toBeVisible();
   })
 
 })
 
 
 
-  // test('checkbox click test', () => {
-  //   render(<App />)  
-  //   fireEvent.click(screen.getByRole('box'))
-  //   expect(screen.getByLabelText('Check'))
-  //   expect(screen.getByLabelText('Check')).toBeChecked()
-  // })
+// test('checkbox click test', () => {
+//   render(<App />)  
+//   fireEvent.click(screen.getByRole('box'))
+//   expect(screen.getByLabelText('Check'))
+//   expect(screen.getByLabelText('Check')).toBeChecked()
+// })
 
 
-  //  ****************** Select Boxes test ***************************
-  describe.skip('Select Boxes test', () => {
-    test('', () => {
+//  ****************** Select Boxes test ***************************
+describe.skip('Select Boxes test', () => {
+  test('', () => {
+    render(<App />)
+    const Skills = screen.getByText('Skills')
+  })
+})
+
+//  ****************** Checkbox click test ***************************
+describe('Checkboxes click test', () => {
+
+  //  ****************** Work Place Checkbox click test ***************************
+  describe('Work Place Type Checkbox click test', () => {
+
+    test('Hybrid checkbox click test', () => {
       render(<App />)
-      const Skills = screen.getByText('Skills')
+      fireEvent.click(screen.getByTestId('Hybrid'))
+      expect(screen.getByTestId('Hybrid')).toBeInTheDocument();
+      expect(screen.getByTestId('Hybrid')).toBeChecked()
+    })
+
+    test('On-site checkbox click test', () => {
+      render(<App />)
+      fireEvent.click(screen.getByTestId('On-site'))
+      expect(screen.getByTestId('On-site'))
+      expect(screen.getByTestId('On-site')).toBeChecked()
+    })
+
+    test('Remote checkbox click test', () => {
+      render(<App />)
+      fireEvent.click(screen.getByTestId('Remote'))
+      expect(screen.getByTestId('Remote'))
+      expect(screen.getByTestId('Remote')).toBeChecked()
+    })
+
+  })
+
+  //  ****************** Job Type Checkbox click test ***********************
+  describe('Job Type Checkbox click test', () => {
+
+    test('Contract checkbox click test', () => {
+      render(<App />)
+      fireEvent.click(screen.getByTestId('Contract'))
+      expect(screen.getByTestId('Contract'))
+      expect(screen.getByTestId('Contract')).toBeChecked()
+    })
+
+    test('Part-time checkbox click test', () => {
+      render(<App />)
+      fireEvent.click(screen.getByTestId('Part-time'))
+      expect(screen.getByTestId('Part-time'))
+      expect(screen.getByTestId('Part-time')).toBeChecked()
+    })
+
+    test('Full-time checkbox click test', () => {
+      render(<App />)
+      fireEvent.click(screen.getByTestId('Full-time'))
+      expect(screen.getByTestId('Full-time'))
+      expect(screen.getByTestId('Full-time')).toBeChecked()
+    })
+
+    test('Volunteer checkbox click test', () => {
+      render(<App />)
+      fireEvent.click(screen.getByTestId('Volunteer'))
+      expect(screen.getByTestId('Volunteer'))
+      expect(screen.getByTestId('Volunteer')).toBeChecked()
+    })
+
+    test('Other checkbox click test', () => {
+      render(<App />)
+      fireEvent.click(screen.getByTestId('Other'))
+      expect(screen.getByTestId('Other'))
+      expect(screen.getByTestId('Other')).toBeChecked()
     })
   })
 
-  //  ****************** Checkbox click test ***************************
-  describe('Checkboxes click test', () => {
 
-    //  ****************** Work Place Checkbox click test ***************************
-    describe('Work Place Type Checkbox click test', () => {
+  //  ****************** Schedule Checkbox click test ***********************
 
-      test('Hybrid checkbox click test', () => {
-        render(<App />)
-        fireEvent.click(screen.getByTestId('Hybrid'))
-        expect(screen.getByTestId('Hybrid')).toBeInTheDocument();
-        expect(screen.getByTestId('Hybrid')).toBeChecked()
-      })
+  describe('Schedule Checkbox click test', () => {
 
-      test('On-site checkbox click test', () => {
-        render(<App />)
-        fireEvent.click(screen.getByTestId('On-site'))
-        expect(screen.getByTestId('On-site'))
-        expect(screen.getByTestId('On-site')).toBeChecked()
-      })
-
-      test('Remote checkbox click test', () => {
-        render(<App />)
-        fireEvent.click(screen.getByTestId('Remote'))
-        expect(screen.getByTestId('Remote'))
-        expect(screen.getByTestId('Remote')).toBeChecked()
-      })
-
+    test('Fixed click test', () => {
+      render(<App />)
+      fireEvent.click(screen.getByTestId('Fixed'))
+      expect(screen.getByTestId('Fixed'))
+      expect(screen.getByTestId('Fixed')).toBeChecked()
     })
 
-    //  ****************** Job Type Checkbox click test ***********************
-    describe('Job Type Checkbox click test', () => {
-
-      test('Contract checkbox click test', () => {
-        render(<App />)
-        fireEvent.click(screen.getByTestId('Contract'))
-        expect(screen.getByTestId('Contract'))
-        expect(screen.getByTestId('Contract')).toBeChecked()
-      })
-
-      test('Part-time checkbox click test', () => {
-        render(<App />)
-        fireEvent.click(screen.getByTestId('Part-time'))
-        expect(screen.getByTestId('Part-time'))
-        expect(screen.getByTestId('Part-time')).toBeChecked()
-      })
-
-      test('Full-time checkbox click test', () => {
-        render(<App />)
-        fireEvent.click(screen.getByTestId('Full-time'))
-        expect(screen.getByTestId('Full-time'))
-        expect(screen.getByTestId('Full-time')).toBeChecked()
-      })
-
-      test('Volunteer checkbox click test', () => {
-        render(<App />)
-        fireEvent.click(screen.getByTestId('Volunteer'))
-        expect(screen.getByTestId('Volunteer'))
-        expect(screen.getByTestId('Volunteer')).toBeChecked()
-      })
-
-      test('Other checkbox click test', () => {
-        render(<App />)
-        fireEvent.click(screen.getByTestId('Other'))
-        expect(screen.getByTestId('Other'))
-        expect(screen.getByTestId('Other')).toBeChecked()
-      })
+    test('Flexible click test', () => {
+      render(<App />)
+      fireEvent.click(screen.getByTestId('Flexible'))
+      expect(screen.getByTestId('Flexible'))
+      expect(screen.getByTestId('Flexible')).toBeChecked()
     })
 
-
-    //  ****************** Schedule Checkbox click test ***********************
-
-    describe('Schedule Checkbox click test', () => {
-
-      test('Fixed click test', () => {
-        render(<App />)
-        fireEvent.click(screen.getByTestId('Fixed'))
-        expect(screen.getByTestId('Fixed'))
-        expect(screen.getByTestId('Fixed')).toBeChecked()
-      })
-
-      test('Flexible click test', () => {
-        render(<App />)
-        fireEvent.click(screen.getByTestId('Flexible'))
-        expect(screen.getByTestId('Flexible'))
-        expect(screen.getByTestId('Flexible')).toBeChecked()
-      })
-
-      test('WeekendOnly click test', () => {
-        render(<App />)
-        fireEvent.click(screen.getByTestId('WeekendOnly'))
-        expect(screen.getByTestId('WeekendOnly'))
-        expect(screen.getByTestId('WeekendOnly')).toBeChecked()
-      })
-
-      test('MondaytoFriday click test', () => {
-        render(<App />)
-        fireEvent.click(screen.getByTestId('MondaytoFriday'))
-        expect(screen.getByTestId('MondaytoFriday'))
-        expect(screen.getByTestId('MondaytoFriday')).toBeChecked()
-      })
-
-      test('UStime click test', () => {
-        render(<App />)
-        fireEvent.click(screen.getByTestId('UStime'))
-        expect(screen.getByTestId('UStime'))
-        expect(screen.getByTestId('UStime')).toBeChecked()
-      })
-
-      test('Indiatime click test', () => {
-        render(<App />)
-        fireEvent.click(screen.getByTestId('Indiatime'))
-        expect(screen.getByTestId('Indiatime'))
-        expect(screen.getByTestId('Indiatime')).toBeChecked()
-      })
-
-      test('ScheduleOther click test', () => {
-        render(<App />)
-        fireEvent.click(screen.getByTestId('ScheduleOther'))
-        expect(screen.getByTestId('ScheduleOther'))
-        expect(screen.getByTestId('ScheduleOther')).toBeChecked()
-      })
-
+    test('WeekendOnly click test', () => {
+      render(<App />)
+      fireEvent.click(screen.getByTestId('WeekendOnly'))
+      expect(screen.getByTestId('WeekendOnly'))
+      expect(screen.getByTestId('WeekendOnly')).toBeChecked()
     })
+
+    test('MondaytoFriday click test', () => {
+      render(<App />)
+      fireEvent.click(screen.getByTestId('MondaytoFriday'))
+      expect(screen.getByTestId('MondaytoFriday'))
+      expect(screen.getByTestId('MondaytoFriday')).toBeChecked()
+    })
+
+    test('UStime click test', () => {
+      render(<App />)
+      fireEvent.click(screen.getByTestId('UStime'))
+      expect(screen.getByTestId('UStime'))
+      expect(screen.getByTestId('UStime')).toBeChecked()
+    })
+
+    test('Indiatime click test', () => {
+      render(<App />)
+      fireEvent.click(screen.getByTestId('Indiatime'))
+      expect(screen.getByTestId('Indiatime'))
+      expect(screen.getByTestId('Indiatime')).toBeChecked()
+    })
+
+    test('ScheduleOther click test', () => {
+      render(<App />)
+      fireEvent.click(screen.getByTestId('ScheduleOther'))
+      expect(screen.getByTestId('ScheduleOther'))
+      expect(screen.getByTestId('ScheduleOther')).toBeChecked()
+    })
+
   })
+})
